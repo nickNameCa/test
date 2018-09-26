@@ -1,0 +1,37 @@
+﻿<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 配置常量，覆盖struts属性的默认配置，用于禁止调用动态方法 -->
+	<constant name="strutssenableDynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="htm" />
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.multipart.maxSize" value="41246720" />
+	<constant name="struts.custom.i18n.resources" value="applicationResource"></constant>
+	<constant name="struts.custom.i18n.resources" value="formartPattern"></constant>
+	<include file="struts-*.xml"></include>
+	<package name="interceptor-pack" abstract="true" extends="struts-default">
+
+		<interceptors>
+			<interceptor-stack name="uploadStack">
+				<interceptor-ref name="fileUpload">
+					<!-- 文件过滤 -->
+					<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
+					<!-- 文件大小, 以字节为单位 -->
+					<param name="maximumSize">2097152</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="success">/index.jsp</result>
+		</global-results>
+
+	</package>
+	<package name="testSome" namespace="/" extends="json-default">
+			<action name="test" class="com.java.struts.ca.action.TestAction" method="execute" >
+				<result name="success">/index.jsp</result>
+			</action>
+	</package>
+
+	
+</struts> 
